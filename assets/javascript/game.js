@@ -1,90 +1,75 @@
 var yourCharacter;
 var enemies = [];
+var defender;
 
-//Adding Fighters and their Attributes
-var bruceLee = { name: "Bruce Lee",
-                 health: 125,
-                 imageSource: 'assets/images/bruceLeeImage.jpeg'}
-var jetLi = { name: "Jet Li",
-                 health: 115}
-var jackieChan = { name: "Jackie Chan",
-                 health: 100}
-var jeanClaude = { name: "Jean Claude",
-                 health: 110}
+//Adding Fighters and their Attributes put these in an array - was name, health, imageSource, element
+var bruceLee = ["Bruce Lee", 125, 'assets/images/bruceLeeImage.jpeg', "bruceLee"]
+var jetLi = ["Jet Li", 115, 'assets/images/jetLiImage.jpeg', "jetLi"]
+var jackieChan = ["Jackie Chan", 100, 'assets/images/jackieChanImage.jpeg', "jackieChan"]
+var jeanClaude = ["Jean Claude", 110, 'assets/images/jeanClaudeImage.jpeg', "jeanClaude"]
+var allCharacters = [bruceLee, jetLi, jackieChan, jeanClaude]
 
 
 $(document).ready(function() {
 
   //Adding Fighter picutres to DOM
-  $("#bruceLeePic").html('<img id="Bruce Lee" src="assets/images/bruceLeeImage.jpeg" />');
-  $("#jetLiPic").html('<img id="Jet Li" src="assets/images/jetLiImage.jpeg" />');
-  $("#jeanClaudePic").html('<img id="Jean Claude" src="assets/images/jeanClaudeImage.jpeg" />');
-  $("#jackieChanPic").html('<img id="Jackie Chan" src="assets/images/jackieChanImage.jpeg" />');
+  for (i = 0; i < allCharacters.length; i++ ) {
+    $("#" + allCharacters[i][3] + "Pic").html('<img id="' + allCharacters[i][3] + '" src="' + allCharacters[i][2] + '" />');
+  }
 
+  //function to add characters not selected to enemies <div>
+  function addEnemies() {
+    for (i = 0; i < enemies.length; i++) {
+      $("#enemies").append('<img id="' + enemies[i][3] + '" src="' + enemies[i][2] + '" />');
+      console.log(enemies)
+    }
+  }
 
-  //$(".characterList").on("click", function(){
-    //console.log(this);
-
-  //})
-
-  //If Bruce Lee is the selected fighter
-  $("#bruceLeePic").on("click", function() {
-    yourCharacter = bruceLee;
+  //Selecting the character you will fight with
+  $(".characterList").on("click", function(){
+    console.log(this.dataset.position)
+    if (this.dataset.position == 1) {
+      yourCharacter = bruceLee;
+      enemies.push(jetLi, jackieChan, jeanClaude);
+      $("#jackieChanPic").hide();
+      $("#jetLiPic").hide();
+      $("#jeanClaudePic").hide();
+      addEnemies();
+    } else if (this.dataset.position == 2) {
+      yourCharacter = jetLi;
+      enemies.push(bruceLee, jackieChan, jeanClaude);
+      $("#jackieChanPic").hide();
+      $("#bruceLeePic").hide();
+      $("#jeanClaudePic").hide();
+      addEnemies();
+    } else if (this.dataset.position == 3) {
+      yourCharacter = jeanClaude;
+      enemies.push(bruceLee, jackieChan, jetLi);
+      $("#jackieChanPic").hide();
+      $("#bruceLeePic").hide();
+      $("#jetLiPic").hide();
+      addEnemies();
+    } else {
+      yourCharacter = jackieChan;
+      enemies.push(bruceLee, jeanClaude, jetLi);
+      $("#jeanClaudePic").hide();
+      $("#bruceLeePic").hide();
+      $("#jetLiPic").hide();
+      addEnemies();
+    } 
+    
     console.log(yourCharacter);
-    enemies.push(jetLi, jackieChan, jeanClaude);
     console.log(enemies);
-    $("#jackieChanPic").hide();
-    $("#jetLiPic").hide();
-    $("#jeanClaudePic").hide();
-    $("#enemies").append('<img id="Jackie Chan" src="assets/images/jackieChanImage.jpeg" />');
-    $("#enemies").append('<img id="Jean Claude" src="assets/images/jeanClaudeImage.jpeg" />');
-    $("#enemies").append('<img id="Jet Li" src="assets/images/jetLiImage.jpeg" />');
-  });
+  })
 
-  //If Jet Li is the selected fighter
-  $("#jetLiPic").on("click", function() {
-    yourCharacter = jetLi;
-    console.log(yourCharacter);
-    enemies.push(bruceLee, jackieChan, jeanClaude);
-    console.log(enemies);
-    $("#jackieChanPic").hide();
-    $("#bruceLeePic").hide();
-    $("#jeanClaudePic").hide();
-    $("#enemies").append('<img id="Jean Claude" src="assets/images/jeanClaudeImage.jpeg" />');
-    $("#enemies").append('<img id="Jackie Chan" src="assets/images/jackieChanImage.jpeg" />');
-    $("#enemies").append('<img id="Bruce Lee" src="assets/images/bruceLeeImage.jpeg" />');
-  });
-
-  //If Jean Claude is the selected fighter
-  $("#jeanClaudePic").on("click", function() {
-    yourCharacter = jeanClaude;
-    console.log(yourCharacter);
-    enemies.push(bruceLee, jackieChan, jetLi);
-    console.log(enemies);
-    $("#jackieChanPic").hide();
-    $("#jetLiPic").hide();
-    $("#bruceLeePic").hide();
-    $("#enemies").append('<img id="Jackie Chan" src="assets/images/jackieChanImage.jpeg" />');
-    $("#enemies").append('<img id="Bruce Lee" src="assets/images/bruceLeeImage.jpeg" />');
-    $("#enemies").append('<img id="Jet Li" src="assets/images/jetLiImage.jpeg" />');
-  });
-
-  //If Jackie Chan is the selected fighter
-  $("#jackieChanPic").on("click", function() {
-    yourCharacter = jackieChan;
-    console.log(yourCharacter);
-    enemies.push(bruceLee, jeanClaude, jetLi);
-    console.log(enemies);
-    $("#bruceLeePic").hide();
-    $("#jetLiPic").hide();
-    $("#jeanClaudePic").hide();
-    $("#enemies").append('<img id="Bruce Lee" src="assets/images/bruceLeeImage.jpeg" />');
-    $("#enemies").append('<img id="Jet Li" src="assets/images/jetLiImage.jpeg" />');
-    $("#enemies").append('<img id="Jean Claude" src="assets/images/jeanClaudeImage.jpeg" />');
-  });
-
+  //Selecting the defender from the enemies array
   $("#enemies").on("click", function() {
-    console.log(this);
+    console.log(this)
+    if (this.id == "jetLi") {
+      console.log("that actually worked");
+      $("#jetLi").hide();
+      defender = jetLi;
+    }
   });
 
 });
