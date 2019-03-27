@@ -1,6 +1,6 @@
 var yourCharacter;
 var enemies = [];
-var defender = []
+var defender;
 
 //Adding Fighters and their Attributes put these in an array - was name, health, imageSource, element
 var bruceLee = ["Bruce Lee", 125, 'assets/images/bruceLeeImage.jpeg', "bruceLee"]
@@ -71,24 +71,28 @@ $(document).ready(function() {
       $("#jetLiDefender").append('<img id="' + jetLi[3] + '" src="' + jetLi[2] + '" />');
       $("#defenderHealth").html(defender[1]);
       $("#yourCharacterHealth").html(yourCharacter[1]);
+      $(".defender").show();
     } else if (this.dataset.position == 1) {
       defender = bruceLee;
       $("#bruceLeeEnemy").hide();
       $("#bruceLeeDefender").append('<img id="' + bruceLee[3] + '" src="' + bruceLee[2] + '" />');
       $("#defenderHealth").html(defender[1]);
       $("#yourCharacterHealth").html(yourCharacter[1]);
+      $(".defender").show();
     } else if (this.dataset.position == 3) {
       defender = jeanClaude;
       $("#jeanClaudeEnemy").hide();
       $("#jeanClaudeDefender").append('<img id="' + jeanClaude[3] + '" src="' + jeanClaude[2] + '" />');
       $("#defenderHealth").html(defender[1]);
       $("#yourCharacterHealth").html(yourCharacter[1]);
+      $(".defender").show();
     } else {
       defender = jackieChan;
       $("#jackieChanEnemy").hide();
       $("#jackieChanDefender").append('<img id="' + jackieChan[3] + '" src="' + jackieChan[2] + '" />');
       $("#defenderHealth").html(defender[1]);
       $("#yourCharacterHealth").html(yourCharacter[1]);
+      $(".defender").show();
     } 
 
     //When Attack is
@@ -104,15 +108,17 @@ $(document).ready(function() {
     //If you lose
     function youLose(){
       if (yourCharacter[1] <= 0){
-        $("#youLose").html("You Lose...");
-        defender;
+        $("#youLose").html("You were defeated by " + defender[0] + "...");
+        defender = null;
       }
     }
 
     //If you win
     function youWin(){
       if (defender[1] <= 0){
-        $("#youWin").html("You Win!");
+        $("#youWin").html("You defeated " + defender[0] + "!");
+        $(".defender").hide();
+        $("#defenderHealth").hide();
       }
     }
   });
