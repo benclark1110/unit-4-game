@@ -1,6 +1,6 @@
 var yourCharacter;
 var enemies = [];
-var defender;
+var defender = []
 
 //Adding Fighters and their Attributes put these in an array - was name, health, imageSource, element
 var bruceLee = ["Bruce Lee", 125, 'assets/images/bruceLeeImage.jpeg', "bruceLee"]
@@ -20,7 +20,7 @@ $(document).ready(function() {
   //function to add characters not selected to enemies <div>
   function addEnemies() {
     for (i = 0; i < enemies.length; i++) {
-      $("#enemies").append('<img id="' + enemies[i][3] + '" src="' + enemies[i][2] + '" />');
+      $("#" + enemies[i][3] + "Enemy").append('<img id="' + enemies[i][3] + '" src="' + enemies[i][2] + '" />');
       console.log(enemies)
     }
   }
@@ -63,13 +63,57 @@ $(document).ready(function() {
   })
 
   //Selecting the defender from the enemies array
-  $("#enemies").on("click", function() {
-    console.log(this)
-    if (this.id == "jetLi") {
-      console.log("that actually worked");
-      $("#jetLi").hide();
+  $(".enemies").on("click", function(){
+    console.log(this.dataset.position)
+    if (this.dataset.position == 2) {
       defender = jetLi;
+      $("#jetLiEnemy").hide();
+      $("#jetLiDefender").append('<img id="' + jetLi[3] + '" src="' + jetLi[2] + '" />');
+      $("#defenderHealth").html(defender[1]);
+      $("#yourCharacterHealth").html(yourCharacter[1]);
+    } else if (this.dataset.position == 1) {
+      defender = bruceLee;
+      $("#bruceLeeEnemy").hide();
+      $("#bruceLeeDefender").append('<img id="' + bruceLee[3] + '" src="' + bruceLee[2] + '" />');
+      $("#defenderHealth").html(defender[1]);
+      $("#yourCharacterHealth").html(yourCharacter[1]);
+    } else if (this.dataset.position == 3) {
+      defender = jeanClaude;
+      $("#jeanClaudeEnemy").hide();
+      $("#jeanClaudeDefender").append('<img id="' + jeanClaude[3] + '" src="' + jeanClaude[2] + '" />');
+      $("#defenderHealth").html(defender[1]);
+      $("#yourCharacterHealth").html(yourCharacter[1]);
+    } else {
+      defender = jackieChan;
+      $("#jackieChanEnemy").hide();
+      $("#jackieChanDefender").append('<img id="' + jackieChan[3] + '" src="' + jackieChan[2] + '" />');
+      $("#defenderHealth").html(defender[1]);
+      $("#yourCharacterHealth").html(yourCharacter[1]);
+    } 
+
+    //When Attack is
+    $("#attack").on("click", function(){
+      defender[1] = defender[1] - 15;
+      yourCharacter[1] = yourCharacter[1] - 10;
+      youWin();
+      youLose();
+      $("#defenderHealth").html(defender[1]);
+      $("#yourCharacterHealth").html(yourCharacter[1]);
+    });
+  
+    //If you lose
+    function youLose(){
+      if (yourCharacter[1] <= 0){
+        $("#youLose").html("You Lose...");
+        defender;
+      }
+    }
+
+    //If you win
+    function youWin(){
+      if (defender[1] <= 0){
+        $("#youWin").html("You Win!");
+      }
     }
   });
-
 });

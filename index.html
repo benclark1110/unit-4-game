@@ -10,24 +10,36 @@
 </head>
 <body>
         <script src="assets/javascript/game.js"></script> 
-    <header>Game Title Goes Here</header>
-    
+    <h1><strong>Martial Arts RPG</strong></h1>
+
+    <div id="youWin"></div>
+    <div id="youLose"></div>
+
+    <h1>Your Character</h1>
+
     <div class="characterList" id="bruceLeePic" data-position=1></div>
     <div class="characterList" id="jetLiPic" data-position=2></div>
     <div class="characterList" id="jeanClaudePic" data-position=3></div>
     <div class="characterList" id="jackieChanPic" data-position=4></div>
 
-    <h1>Your Character</h1>
+    
+    <div id="yourCharacterHealth"></div>
 
-    <div id="enemies"></div>
+    <div class="enemies" id="bruceLeeEnemy" data-position=1></div>
+    <div class="enemies" id="jetLiEnemy" data-position=2></div>
+    <div class="enemies" id="jeanClaudeEnemy" data-position=3></div>
+    <div class="enemies" id="jackieChanEnemy" data-position=4></div>
 
     <h1>Fight Section</h1>
 
-    <button type="button">Attack!</button>
+    <button type="button" id="attack">Attack!</button>
 
-    <div id="defender">Defender</div>
-
+    <div class="defender" id="bruceLeeDefender" data-position=1></div>
+    <div class="defender" id="jetLiDefender" data-position=2></div>
+    <div class="defender" id="jeanClaudeDefender" data-position=3></div>
+    <div class="defender" id="jackieChanDefender" data-position=4></div>
        
-    
+    <div id="defenderHealth"></div>
+
 </body>
 </html>
